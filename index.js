@@ -22,11 +22,15 @@ connection.connect((err) => {
     }
 })
 
-app.listen(3000, () => {
+app.listen(80, () => {
     console.log('Express Server running at port 3000.')
 });
 
-app.get('/artists', (res, req) => {
+app.get('/', (req, res) => {
+    res.send('Welcome Home!');
+})
+
+app.get('/artists', (req, res) => {
     connection.query('SELECT * FROM Artist', (err, rows, fields) => {
         if (err) {
             console.log('Error getting artists.');
@@ -35,4 +39,6 @@ app.get('/artists', (res, req) => {
             console.log(rows);
         }
     })
+
+    res.send('Artists from the Gallery!');
 })
