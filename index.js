@@ -31,14 +31,17 @@ app.get('/', (req, res) => {
 })
 
 app.get('/artists', (req, res) => {
+    var artists = 'NA';
     connection.query('SELECT * FROM Artist', (err, rows, fields) => {
         if (err) {
             console.log('Error getting artists.');
             console.log(`Error: ${err}`);
         } else {
+            artists = rows;
             console.log(rows);
+            //res.send(artists);
         }
     })
 
-    res.send('Artists from the Gallery!');
+    res.send(`Artists from the Gallery!\n${JSON.stringify(artists)}`);
 })
