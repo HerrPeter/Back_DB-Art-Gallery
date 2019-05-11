@@ -23,7 +23,7 @@ connection.connect((err) => {
 })
 
 app.listen(80, () => {
-    console.log('Express Server running at port 3000.')
+    console.log('Express Server running at port 80.')
 });
 
 app.get('/', (req, res) => {
@@ -35,7 +35,7 @@ app.get('/artists', (req, res) => {
     connection.query('SELECT * FROM Artist', (err, rows, fields) => {
         if (err) {
             console.log('Error getting artists.');
-            console.log(`Error: ${err}`);
+            console.log(err);
         } else {
             artists = rows;
             console.log(rows);
