@@ -22,8 +22,9 @@ connection.connect((err) => {
     }
 })
 
-app.listen(80, () => {
-    console.log('Express Server running at port 80.')
+const PORT = process.env.PORT || 80;
+app.listen(PORT, () => {
+    console.log(`Express Server running at port ${PORT}.`)
 });
 
 app.get('/', (req, res) => {
