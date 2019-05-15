@@ -22,8 +22,8 @@ connection.connect((err) => {
 })
 
 app.get('/', (req, res) => {
-    //res.send('Welcome Home Baby!');
-    var results = "My My What progress.";
+    console.log('Request from: ' + req.ip);
+    var results = "Hello World - I'm a lil server response =P";
     return res.json({
         data: results
     });
