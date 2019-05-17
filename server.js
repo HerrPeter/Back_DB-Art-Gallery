@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
+const path = require('path')
 
 const app = express();
 app.use(cors());
@@ -9,7 +10,7 @@ const connection = mysql.createConnection({
     host: '35.222.200.150',
     user: 'sample',
     password: 'sample',
-    database: 'ArtGallery'
+    database: 'ArtGallery',
 })
 
 connection.connect((err) => {
@@ -22,7 +23,6 @@ connection.connect((err) => {
 })
 
 app.get('/', (req, res) => {
-    //res.send('Welcome Home Baby!');
     var results = "My My What progress.";
     return res.json({
         data: results
