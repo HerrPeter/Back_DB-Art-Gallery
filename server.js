@@ -38,18 +38,16 @@ app.get('/', (req, res) => {
 // Respond to /artists directory (w/ query values).
 app.get('/artists', (req, res) => {
     // Parse request params (NOT FOR THIS REQUEST/RESPONSE).
-    var artists = '<NULL>';
     const {name, phone, address, birthplace, age} = req.query;
 
     // Make query request from SQL connection.
     connection.query(`SELECT * FROM Artist;`, (err, rows, fields) => {
         if(err){
             console.log(err);
+            return res.json({data: null, columns: null });
         }else{
             console.log('Successful Query');
-            artists = rows;
-            console.log(artists);
-            return res.json({data: artists, columns: fields});
+            return res.json({data: rows, columns: fields});
         }
     })
 })
