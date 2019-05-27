@@ -37,16 +37,27 @@ app.get('/', (req, res) => {
 
 // Respond to /artists directory (w/ query values).
 app.get('/artists', (req, res) => {
+    // Decode query (INCOMPLETE).
+    //const decodedQuery = Buffer.from(req.query, 'base64').toString();
+    //console.log(req.query)
+    //console.log(decodedQuery);
+    
     // Parse request params (NOT FOR THIS REQUEST/RESPONSE).
-    const {name, phone, address, birthplace, age} = req.query;
+    const {name, phone, address, birthplace, age, table} = req.query;
+    
+    // Quit if no valid table to query.
+    if(!table){
+        console.log(`Invalid table: ${table}`);
+        return;
+    }
 
     // Make query request from SQL connection.
-    connection.query(`SELECT * FROM Artist;`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM ${table};`, (err, rows, fields) => {
         if(err){
             console.log(err);
             return res.json({data: null, columns: null });
         }else{
-            console.log('Successful Query');
+            console.log(`Successful Query from table: ${table}`);
             return res.json({data: rows, columns: fields});
         }
     })
