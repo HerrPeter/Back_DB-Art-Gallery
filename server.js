@@ -35,6 +35,46 @@ app.get('/', (req, res) => {
     });
 })
 
+// Respond to a column request.
+app.get('/ag_db', (req, res) => {
+    // Parse request params.
+    const {table} = req.query;
+    
+    // Quit if no valid table to query.
+    if(!table){
+        console.log(`Invalid table: ${table}`);
+        return;
+    }
+
+    // Make query request from SQL connection.
+    connection.query(`SHOW COLUMNS FROM ${table}`, (err, rows, fields) => {
+        if(err){
+            console.log(err);
+            return res.json({data: null, columns: null });
+        }else{
+            console.log(`Successful Column Query from table: ${table}`);
+            return res.json({data: rows});
+        }
+    })
+})
+
+// Respond to searched values from a column with in a table.
+app.get('/ag_db/search', (req, res) => {
+    const {name, phone, address, birthplace, age, table, searchCol, searchVal } = req.query;
+    let condition = `${searchCol}="${searchVal}"`;
+
+    connection.query(`SELECT * FROM ${table} WHERE ${condition}`, (err, rows, fields) => {
+        if(err){
+            console.log(err);
+            return res.json({data: null, columns: null });
+        }else{
+            console.log(`Successful Query from table: ${table} | search val: ${searchVal}`)
+            return res.json({data: rows, columns: fields});
+        }
+    });
+
+})
+
 // Respond to /artists directory (w/ query values).
 app.get('/artists', (req, res) => {
     // Decode query (INCOMPLETE).
